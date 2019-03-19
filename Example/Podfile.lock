@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  JKLocationMananger: 76251fb4b7ad55df61396a0b7ee790909dee2312
+  JKLocationMananger: 522b62e1e69d68ced1c4b4aa99563861f807d58c
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
 

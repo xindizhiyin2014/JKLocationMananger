@@ -31,7 +31,7 @@ this is a location manager it will update with the need.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'JKLocationMananger/Classes/**/*'
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   # s.resource_bundles = {
   #   'JKLocationMananger' => ['JKLocationMananger/Assets/*.png']
   # }

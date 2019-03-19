@@ -21,26 +21,26 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
         self.locationManager.delegate = self
     }
     
-    class func locate(success:@escaping (_ latitude:Double? ,_ longitude:Double?) ->Void,failure:@escaping (_ error:Error?) ->Void) ->Void{
+    class func locate(success:@escaping (_ latitude:Double ,_ longitude:Double) ->Void,failure:@escaping (_ error:Error) ->Void) ->Void{
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.locationManager.stopUpdatingLocation()
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
                 if success != nil {
-                    success(currentLocation?.coordinate.latitude,currentLocation?.coordinate.longitude)
+                    success(currentLocation!.coordinate.latitude,currentLocation!.coordinate.longitude)
                 }
             }
             JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
     }
     
-    class func locate(success:@escaping (_ city:String) ->Void,failure:@escaping (_ error:Error?) ->Void) ->Void{
+    class func locate(success:@escaping (_ city:String) ->Void,failure:@escaping (_ error:Error) ->Void) ->Void{
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.failureBlock = failure
-            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
+            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation) ->Void in
                 if success != nil {
                     let geocoder = CLGeocoder.init()
-                    geocoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks, error) in
+                    geocoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) in
                         let place = placemarks!.last
                         let city = place!.locality
                         success(city ?? "")
