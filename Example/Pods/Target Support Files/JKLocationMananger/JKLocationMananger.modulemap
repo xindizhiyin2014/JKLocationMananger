@@ -1,0 +1,6 @@
+framework module JKLocationMananger {
+  umbrella header "JKLocationMananger-umbrella.h"
+
+  export *
+  module * { export * }
+}

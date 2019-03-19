@@ -1,0 +1,83 @@
+
+import Foundation
+import CoreLocation
+typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> ()
+typealias LocateFailureBlock = (_ error:Error?) -> ()
+class JKLocationMananger: NSObject,CLLocationManagerDelegate {
+    var locationManager:CLLocationManager
+    var successBlock:LocateSuccessBlock?
+    var failureBlock:LocateFailureBlock?
+      static let shareInstance = JKLocationMananger()
+    
+    
+    private override init() {
+      super.init()
+        self.locationManager = CLLocationManager.init()
+        self.locationManager.delegate = self
+        if #available(iOS 8.0, *) {
+          self.locationManager .requestWhenInUseAuthorization()
+        }
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = 5.0
+    }
+    
+    class func locate(success:@escaping (_ latitude:Double? ,_ longitude:Double?) ->(),failure:@escaping (_ error:Error?) ->()) ->(){
+        if CLLocationManager.locationServicesEnabled() {
+            JKLocationMananger.shareInstance.locationManager.stopUpdatingLocation()
+            JKLocationMananger.shareInstance.failureBlock = failure
+            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->() in
+                if success != nil {
+                    success(currentLocation?.coordinate.latitude,currentLocation?.coordinate.longitude)
+                }
+            }
+            JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
+        }
+    }
+    
+    class func locate(success:@escaping (_ city:String) ->(),failure:@escaping (_ error:Error?) ->()) ->(){
+        if CLLocationManager.locationServicesEnabled() {
+            JKLocationMananger.shareInstance.failureBlock = failure
+            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->() in
+                if success != nil {
+                    var geocoder = CLGeocoder.init()
+                    geocoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks:Array, error) in
+                        var place = placemarks.last
+                        var city = place.locality
+                        success(city)
+                        
+                    })
+                    
+                }
+                
+            }
+            JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
+        }
+        
+    }
+    
+    func clearBlock() -> () {
+        self.successBlock = nil
+        self.failureBlock = nil
+    }
+    
+    /// CoreLocationDelegate
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if self.failureBlock != nil {
+            self.failureBlock!(error)
+            self.clearBlock()
+        }
+       
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+       self.locationManager.stopUpdatingLocation()
+        if self.successBlock != nil {
+            let currentLocation = locations.last
+            self.successBlock!(currentLocation)
+            self.clearBlock()
+        }
+        
+    }
+    
+    
+}
