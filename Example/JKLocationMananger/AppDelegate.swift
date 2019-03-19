@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import JKLocationMananger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,12 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
         let vc = ViewController.init(nibName: nil, bundle: nil)
         self.window?.rootViewController = vc
-        JKLocationMananger.locate(success: { (a, b) in
-            print(a!)
-            print(b!)
-        }, failure: { (error) in
-            print(error!)
-        })
+        
         self.window?.makeKeyAndVisible()
         return true
     }

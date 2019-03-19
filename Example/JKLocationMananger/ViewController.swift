@@ -20,12 +20,17 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
-        JKLocationMananger.locate(success: { (a, b) in
-            print(a!)
-            print(b!)
-        }, failure: { (error) in
-            print(error!)
-        })
+//        JKLocationMananger.locate(success: { (a, b) in
+//            print(a!)
+//            print(b!)
+//        }, failure: { (error) in
+//            print(error!)
+//        })
+//        JKLocationMananger.locate(success: { (city) in
+//          print(city!)
+//        }, failure: { (error) in
+//            print(error!)
+//        })
     }
 
     override func didReceiveMemoryWarning() {

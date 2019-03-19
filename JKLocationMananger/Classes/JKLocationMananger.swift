@@ -70,7 +70,7 @@ public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     
     
     /// CoreLocationDelegate
-    private func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if self.failureBlock != nil {
             self.failureBlock!(error)
             self.clearBlock()
@@ -78,7 +78,7 @@ public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
        
     }
     
-    private func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
        self.locationManager.stopUpdatingLocation()
         if self.successBlock != nil {
             let currentLocation = locations.last
