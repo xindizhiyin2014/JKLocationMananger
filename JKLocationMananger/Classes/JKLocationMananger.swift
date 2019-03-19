@@ -11,14 +11,14 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     
     
     private override init() {
-      super.init()
         self.locationManager = CLLocationManager.init()
-        self.locationManager.delegate = self
+        super.init()
         if #available(iOS 8.0, *) {
           self.locationManager .requestWhenInUseAuthorization()
         }
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter = 5.0
+        self.locationManager.delegate = self
     }
     
     class func locate(success:@escaping (_ latitude:Double? ,_ longitude:Double?) ->Void,failure:@escaping (_ error:Error?) ->Void) ->Void{
