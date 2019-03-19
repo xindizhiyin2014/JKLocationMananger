@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JKLocationMananger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        let vc = ViewController.init(nibName: nil, bundle: nil)
+        self.window?.rootViewController = vc
+        JKLocationMananger.locate(success: { (a, b) in
+            print(a!)
+            print(b!)
+        }, failure: { (error) in
+            print(error!)
+        })
+        self.window?.makeKeyAndVisible()
         return true
     }
 

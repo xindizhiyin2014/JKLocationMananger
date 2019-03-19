@@ -14,6 +14,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = UIColor.white
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        JKLocationMananger.locate(success: { (a, b) in
+            print(a!)
+            print(b!)
+        }, failure: { (error) in
+            print(error!)
+        })
     }
 
     override func didReceiveMemoryWarning() {

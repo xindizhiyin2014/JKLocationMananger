@@ -5,7 +5,7 @@ import CoreLocation
 typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> Void
 typealias LocateFailureBlock = (_ error:Error?) -> Void
 
-class JKLocationMananger: NSObject,CLLocationManagerDelegate {
+public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager
     
@@ -28,9 +28,9 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
         self.locationManager.delegate = self
     }
     
-    class func locate(success:((_ latitude:Double? ,_ longitude:Double?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
+  public class func locate(success:((_ latitude:Double? ,_ longitude:Double?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
         if CLLocationManager.locationServicesEnabled() {
-            JKLocationMananger.shareInstance.locationManager.stopUpdatingLocation()
+
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
                 if let success = success {
@@ -41,7 +41,7 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
         }
     }
     
-    class func locate(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
+   public class func locate(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
         
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.failureBlock = failure
@@ -63,14 +63,14 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
         
     }
     
-    func clearBlock() -> () {
+   private func clearBlock() -> () {
         self.successBlock = nil
         self.failureBlock = nil
     }
     
     
     /// CoreLocationDelegate
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    private func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if self.failureBlock != nil {
             self.failureBlock!(error)
             self.clearBlock()
@@ -78,7 +78,7 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
        
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    private func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
        self.locationManager.stopUpdatingLocation()
         if self.successBlock != nil {
             let currentLocation = locations.last
