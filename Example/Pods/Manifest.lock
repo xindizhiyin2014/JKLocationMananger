@@ -1,17 +1,8 @@
 PODS:
   - JKLocationMananger (0.1.0)
-  - Nimble (7.0.3)
-  - Quick (1.2.0)
 
 DEPENDENCIES:
   - JKLocationMananger (from `../`)
-  - Nimble (~> 7.0.2)
-  - Quick (~> 1.2.0)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Nimble
-    - Quick
 
 EXTERNAL SOURCES:
   JKLocationMananger:
@@ -19,9 +10,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   JKLocationMananger: 522b62e1e69d68ced1c4b4aa99563861f807d58c
-  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
 
-PODFILE CHECKSUM: 3c823e08a7733d19a8b41f77354c78e88c467393
+PODFILE CHECKSUM: a0f0a407a65f014b6969c9492c564ff7f2950d63
 
 COCOAPODS: 1.5.3

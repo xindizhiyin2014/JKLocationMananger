@@ -1,16 +1,23 @@
 
 import Foundation
 import CoreLocation
+
 typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> Void
 typealias LocateFailureBlock = (_ error:Error?) -> Void
+
 class JKLocationMananger: NSObject,CLLocationManagerDelegate {
+    
     var locationManager:CLLocationManager
+    
     var successBlock:LocateSuccessBlock?
+    
     var failureBlock:LocateFailureBlock?
-      static let shareInstance = JKLocationMananger()
+    
+    static let shareInstance = JKLocationMananger()
     
     
     private override init() {
+        
         self.locationManager = CLLocationManager.init()
         super.init()
         if #available(iOS 8.0, *) {
@@ -30,11 +37,12 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
                 success(currentLocation!.coordinate.latitude,currentLocation!.coordinate.longitude)
                 }
             }
-            JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
+        JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
     }
     
     class func locate(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
+        
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
@@ -50,7 +58,7 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
                 }
                 
             }
-            JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
+        JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
         
     }
