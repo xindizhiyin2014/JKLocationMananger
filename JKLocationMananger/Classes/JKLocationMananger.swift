@@ -1,8 +1,8 @@
 
 import Foundation
 import CoreLocation
-typealias LocateSuccessBlock = (_ currentLocation:CLLocation) -> Void
-typealias LocateFailureBlock = (_ error:Error) -> Void
+typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> Void
+typealias LocateFailureBlock = (_ error:Error?) -> Void
 class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     var locationManager:CLLocationManager
     var successBlock:LocateSuccessBlock?
@@ -21,30 +21,29 @@ class JKLocationMananger: NSObject,CLLocationManagerDelegate {
         self.locationManager.delegate = self
     }
     
-    class func locate(success:((_ latitude:Double ,_ longitude:Double) ->Void)?,failure:((_ error:Error) ->Void)?) ->Void{
+    class func locate(success:((_ latitude:Double? ,_ longitude:Double?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.locationManager.stopUpdatingLocation()
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
-                if success != nil {
-                    success!(currentLocation!.coordinate.latitude,currentLocation!.coordinate.longitude)
+                if let success = success {
+                success(currentLocation!.coordinate.latitude,currentLocation!.coordinate.longitude)
                 }
             }
             JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
     }
     
-    class func locate(success:((_ city:String) ->Void)?,failure:((_ error:Error) ->Void)?) ->Void{
+    class func locate(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.failureBlock = failure
-            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation) ->Void in
-                if  success != nil {
-                    
+            JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
+                if let success = success {
                     let geocoder = CLGeocoder.init()
-                    geocoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) in
+                    geocoder.reverseGeocodeLocation(currentLocation!, completionHandler: { (placemarks, error) in
                         let place = placemarks!.last
                         let city = place!.locality
-                        success!(city!)
+                        success(city)
                         
                     })
                     
