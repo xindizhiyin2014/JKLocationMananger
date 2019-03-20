@@ -31,6 +31,7 @@ class ViewController: UIViewController {
 //        }, failure: { (error) in
 //            print(error!)
 //        })
+       Tool.location()
     }
 
     override func didReceiveMemoryWarning() {

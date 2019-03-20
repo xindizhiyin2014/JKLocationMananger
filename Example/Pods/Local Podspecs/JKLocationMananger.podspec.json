@@ -1,6 +1,6 @@
 {
   "name": "JKLocationMananger",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "this is a location Manager.",
   "description": "this is a location manager it will update with the need.",
   "homepage": "https://github.com/xindizhiyin2014/JKLocationMananger",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/xindizhiyin2014/JKLocationMananger.git",
-    "tag": "0.1.0"
+    "tag": "0.1.2"
   },
   "platforms": {
     "ios": "8.0"

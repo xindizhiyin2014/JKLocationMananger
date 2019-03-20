@@ -5,7 +5,7 @@ import CoreLocation
 typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> Void
 typealias LocateFailureBlock = (_ error:Error?) -> Void
 
-public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
+@objcMembers public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager
     
