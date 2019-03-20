@@ -28,21 +28,23 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
         self.locationManager.delegate = self
     }
     
-  public class func locate(success:((_ latitude:Double? ,_ longitude:Double?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
+    public class func startLocate(success:((_ latitude:String? ,_ longitude:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
         if CLLocationManager.locationServicesEnabled() {
-
+            
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
                 if let success = success {
-                success(currentLocation!.coordinate.latitude,currentLocation!.coordinate.longitude)
+                    
+                    success("\(currentLocation!.coordinate.latitude)","\(currentLocation!.coordinate.longitude)")
+                    
                 }
             }
-        JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
+            JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
     }
     
-   public class func locate(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
-        
+   public class func locateCity(success:((_ city:String?) ->Void)?,failure:((_ error:Error?) ->Void)?) ->Void{
+
         if CLLocationManager.locationServicesEnabled() {
             JKLocationMananger.shareInstance.failureBlock = failure
             JKLocationMananger.shareInstance.successBlock = {(_ currentLocation:CLLocation?) ->Void in
@@ -52,17 +54,18 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
                         let place = placemarks!.last
                         let city = place!.locality
                         success(city)
-                        
+
                     })
-                    
+
                 }
-                
+
             }
         JKLocationMananger.shareInstance.locationManager .startUpdatingLocation()
         }
-        
+
     }
     
+   
    private func clearBlock() -> () {
         self.successBlock = nil
         self.failureBlock = nil
