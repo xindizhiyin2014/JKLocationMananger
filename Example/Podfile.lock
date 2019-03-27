@@ -1,5 +1,5 @@
 PODS:
-  - JKLocationMananger (0.1.3)
+  - JKLocationMananger (0.1.3.1)
 
 DEPENDENCIES:
   - JKLocationMananger (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  JKLocationMananger: 9730e8171f150d0d126381d700de804344ed1564
+  JKLocationMananger: 8b89430b1f6716b625410415f9b62da81dac691d
 
 PODFILE CHECKSUM: a0f0a407a65f014b6969c9492c564ff7f2950d63
 
