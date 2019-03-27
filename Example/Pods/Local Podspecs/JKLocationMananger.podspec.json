@@ -1,6 +1,6 @@
 {
   "name": "JKLocationMananger",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "summary": "this is a location Manager.",
   "description": "this is a location manager it will update with the need.",
   "homepage": "https://github.com/xindizhiyin2014/JKLocationMananger",
@@ -13,12 +13,12 @@
   },
   "source": {
     "git": "https://github.com/xindizhiyin2014/JKLocationMananger.git",
-    "tag": "0.1.2"
+    "tag": "0.1.3"
   },
   "platforms": {
     "ios": "8.0"
   },
   "source_files": "JKLocationMananger/Classes/**/*",
-  "swift_version": "4.2",
+  "swift_version": "5",
   "frameworks": "CoreLocation"
 }

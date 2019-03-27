@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JKLocationMananger'
-  s.version          = '0.1.3'
+  s.version          = '0.1.3.1'
   s.summary          = 'this is a location Manager.'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ this is a location manager it will update with the need.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'JKLocationMananger/Classes/**/*'
-  s.swift_version = '4.2'
+  s.swift_version = '5'
   # s.resource_bundles = {
   #   'JKLocationMananger' => ['JKLocationMananger/Assets/*.png']
   # }
