@@ -4,6 +4,7 @@ import CoreLocation
 
 typealias LocateSuccessBlock = (_ currentLocation:CLLocation?) -> Void
 typealias LocateFailureBlock = (_ error:Error?) -> Void
+typealias LocateAuthorizationBlock = (_ status:CLAuthorizationStatus) -> Void
 
 @objcMembers public class JKLocationMananger: NSObject,CLLocationManagerDelegate {
     
@@ -12,6 +13,9 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
     var successBlock:LocateSuccessBlock?
     
     var failureBlock:LocateFailureBlock?
+    
+    var authorizationBlock:LocateAuthorizationBlock?
+    
     
     static let shareInstance = JKLocationMananger()
     
@@ -54,7 +58,6 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
                         let place = placemarks!.last
                         let city = place!.locality
                         success(city)
-
                     })
 
                 }
@@ -68,16 +71,26 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
     /// 判断是否打开定位服务
     ///
     /// - Parameter block: 回调
-    public class func openLocationService(block:((_ isOpen:Bool) ->Void)?) -> Void{
+    public class func openLocationService(origin:((_ isOpen:Bool) ->Void)?,complete:((_ isOpen:Bool) ->Void)?) -> Void{
       var isOpen = false
-        JKLocationMananger.shareInstance
         
-        if (CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() != .denied){
+        if (CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() != .denied && CLLocationManager.authorizationStatus() != .notDetermined){
             isOpen = true
         }
-        if let block = block{
-            block(isOpen)
+        if let originBlock = origin{
+            originBlock(isOpen)
         }
+        
+        JKLocationMananger.shareInstance.authorizationBlock = {(_ status:CLAuthorizationStatus) ->Void in
+            if let complete = complete{
+                var isOpen:Bool = true
+                if status == .denied || status == .notDetermined {
+                    isOpen = false
+                }
+              complete(isOpen)
+            }
+        }
+        
     }
     
    private func clearBlock() -> () {
@@ -105,5 +118,11 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
         
     }
     
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if self.authorizationBlock != nil {
+            self.authorizationBlock!(status)
+            self.authorizationBlock = nil
+        }
+    }
     
 }
