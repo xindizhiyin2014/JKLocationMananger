@@ -70,6 +70,8 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
     /// - Parameter block: 回调
     public class func openLocationService(block:((_ isOpen:Bool) ->Void)?) -> Void{
       var isOpen = false
+        JKLocationMananger.shareInstance
+        
         if (CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() != .denied){
             isOpen = true
         }
