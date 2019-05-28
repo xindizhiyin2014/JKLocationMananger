@@ -65,7 +65,19 @@ typealias LocateFailureBlock = (_ error:Error?) -> Void
 
     }
     
-   
+    /// 判断是否打开定位服务
+    ///
+    /// - Parameter block: 回调
+    public class func openLocationService(block:((_ isOpen:Bool) ->Void)?) -> Void{
+      var isOpen = false
+        if (CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() != .denied){
+            isOpen = true
+        }
+        if let block = block{
+            block(isOpen)
+        }
+    }
+    
    private func clearBlock() -> () {
         self.successBlock = nil
         self.failureBlock = nil
